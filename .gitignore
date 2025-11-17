@@ -1,0 +1,31 @@
+# Model and training logs
+logs/
+compressed_data*/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Data (optional - uncomment if you want to exclude data files too)
+# DanceCSV/
+# *.csv
