@@ -246,6 +246,23 @@ def train_model(train_data, num_frames, num_features, latent_dim=64, hidden_dim=
             current_lr = optimizer.param_groups[0]['lr']
             print(f"Epoch {epoch:3d}: Loss={avg_loss:.4f}, Recon={avg_recon:.4f}, KL={avg_kl:.4f}, β={beta:.3f}, LR={current_lr:.2e}")
         
+        # Save model every 200 epochs
+        if epoch % 200 == 0 and epoch > 0:
+            checkpoint_path = os.path.join(run_folder, f'checkpoint_epoch_{epoch:04d}.pth')
+            torch.save({
+                'model_state_dict': model.state_dict(),
+                'latent_dim': latent_dim,
+                'hidden_dim': hidden_dim,
+                'num_frames': num_frames,
+                'num_features': num_features,
+                'stats': train_data['stats'],
+                'epoch': epoch,
+                'loss': avg_recon,
+                'timestamp': run_timestamp,
+                'device': str(device)
+            }, checkpoint_path)
+            print(f"Checkpoint saved: epoch_{epoch:04d}.pth")
+        
         # Save best model (overwrite previous best)
         if avg_recon < best_loss - 0.001:
             best_loss = avg_recon
